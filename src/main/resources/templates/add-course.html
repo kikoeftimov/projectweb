@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>-->
+    <!--<script src="/static/js/bootstrap.js" type="application/javascript"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/esm/popper-utils.js"></script>-->
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/home">Courses page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item m-auto">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/courses">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/courses/new">Add new Course</a>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                           placeholder="Search...">
+                    <div class="input-group-append">
+
+                    </div>
+                </div>
+                <a class="btn btn-success btn-sm ml-3" href="/login">
+                    <i class="fa fa-sign-in"></i> Login
+                    <span class="badge badge-light"></span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Web programming project</h1>
+        <h1 class="jumbotron-heading">Courses page</h1>
+    </div>
+</section>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <form action="/courses"
+                  method="post"
+                  enctype="multipart/form-data"
+                  th:object="${course}">
+                <input type="text" hidden="hidden" name="id" th:value="${course.getId()}">
+                <div class="form-group">
+                    <label for="name">Course name</label>
+                    <input type="text"
+                           class="form-control"
+                           th:value="${course.getName()}"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           required
+                           placeholder="Enter course name">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text"
+                           class="form-control"
+                           th:value="${course.getDescription()}"
+                           id="description"
+                           th:field="*{description}"
+                           name="description"
+                           placeholder="Enter description">
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <select th:field="*{price.id}" class="form-control">
+                        <option
+                                th:selected="${course.getPrice() != null && course.getPrice().getId() == pr.getId()}"
+                                th:each="pr: ${prices}"
+                                th:value="${pr.getId()}"
+                                th:text="${pr.getPrice()} + '$'">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select th:field="*{category.id}" class="form-control">
+                        <option
+                                th:selected="${course.getCategory() != null && course.getCategory().getId() == cat.getId()}"
+                                th:each="cat: ${categories}"
+                                th:value="${cat.getId()}"
+                                th:text="${cat.getName()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Author</label>
+                    <select th:field="*{author.id}" class="form-control">
+                        <option
+                                th:selected="${course.getAuthor() != null && course.getAuthor().getId() == aut.getId()}"
+                                th:each="aut: ${authors}"
+                                th:value="${aut.getId()}"
+                                th:text="${aut.getName()}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image</label>
+                    <input name="image" id="image" class="form-control" type="file"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a type="button" class="btn btn-primary" href="/courses">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+

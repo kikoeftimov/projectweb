@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <!--    <link href="/static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>-->
+    <!--    <script src="/static/js/bootstrap.js" type="application/javascript"></script>-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/esm/popper-utils.js"></script>-->
+
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/font-awesome/css/font-awesome.css"></script>
+    <script src="assets/font-awesome/css/font-awesome.min.css"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/home">Courses page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item m-auto">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/courses">Courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/courses/new">Add new Course</a>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                           placeholder="Search...">
+                    <div class="input-group-append">
+
+                    </div>
+                </div>
+                <a class="btn btn-success btn-sm ml-3" href="/login">
+                    <i class="fa fa-sign-in"></i> Login
+                    <span class="badge badge-light"></span>
+                </a>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Web programming project</h1>
+        <h1 class="jumbotron-heading">Courses page</h1>
+    </div>
+</section>
+
+
+<!--<div class="container mb-4">-->
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <div class="table-responsive">-->
+<!--                <table class="table table-striped">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th scope="col"></th>-->
+<!--                        <th scope="col">Course</th>-->
+<!--                        <th scope="col">Description</th>-->
+<!--                        <th scope="col">Price</th>-->
+<!--                        <th scope="col">Category</th>-->
+<!--                        <th scope="col">Author</th>-->
+<!--                        <th></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--&lt;!&ndash;                    <tr th:each="course : ${courses}">&ndash;&gt;-->
+<!--                        <tr>-->
+<!--                        <td></td>-->
+<!--                        <td th:text="${course.getName()}"></td>-->
+<!--                        <td th:text="${course.getDescription()}"></td>-->
+<!--                        <td th:text="${course.getPrice() != null} ? ${course.getPrice().getPrice()} + '$': 'No price'"></td>-->
+<!--                        <td th:text="${course.getCategory() != null} ? ${course.getCategory().getName()} : 'No Category'"></td>-->
+<!--                        <td th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()} : 'No Author'"></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <p th:text="${course.getCategory() != null} ? ${course.getCategory().getName()} : 'No Category'"></p>
+            <img th:src="${course.getImageBase64()}" style="width: 400px; height: 300px;"/>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 th:text="${course.getName()}"></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p th:text="${course.getDescription()}"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    Created by:<p style="font-weight: bold; font-size: 20px;" th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()} : 'No Author'"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p  style="font-weight: bold;" th:text="${course.getPrice() != null} ? ${course.getPrice().getPrice()} + '$': 'No price'"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <a class="btn btn-primary" href="/login">Enroll now</a>
+                    <a class="btn btn-primary" href="/">Share</a>
+                </div>
+                <div class="col-sm-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+
