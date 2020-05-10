@@ -1,7 +1,6 @@
 package com.example.wpproject.project.service_business;
 
 import com.example.wpproject.project.model.Course;
-import com.example.wpproject.project.model.Part;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

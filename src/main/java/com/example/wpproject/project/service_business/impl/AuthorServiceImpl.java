@@ -38,7 +38,6 @@ public class AuthorServiceImpl implements AuthorService {
         Author a = this.findById(id);
         a.setName(author.getName());
         a.setSurname(author.getSurname());
-        a.setUserList(author.getUserList());
         return this.authorRepository.save(a);
     }
 

@@ -1,5 +1,7 @@
 package com.example.wpproject.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Course {
     private Long id;
 
     private String name;
+
     private String description;
 
     @ManyToOne
@@ -22,26 +25,15 @@ public class Course {
     @ManyToOne
     private Author author;
 
-    @OneToMany
-    private List<Part> part;
-
+    @Column(name = "image")
     @Lob
-    @Column(columnDefinition = "LONGBLOB")
     private String imageBase64;
 
+    @JsonIgnore
+    @ManyToMany
+    private List<ShoppingCart> carts;
 
     public Course() {
-    }
-
-
-    public Course(Long id, String name, String description, Price price, Category category, Author author, List<Part> part) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.category = category;
-        this.author = author;
-        this.part = part;
     }
 
     public Long getId() {
@@ -92,14 +84,6 @@ public class Course {
         this.author = author;
     }
 
-    public List<Part> getPart() {
-        return part;
-    }
-
-    public void setPart(List<Part> part) {
-        this.part = part;
-    }
-
     public String getImageBase64() {
         return imageBase64;
     }
@@ -108,7 +92,11 @@ public class Course {
         this.imageBase64 = imageBase64;
     }
 
+    public List<ShoppingCart> getCarts() {
+        return carts;
+    }
 
-
-
+    public void setCarts(List<ShoppingCart> carts) {
+        this.carts = carts;
+    }
 }

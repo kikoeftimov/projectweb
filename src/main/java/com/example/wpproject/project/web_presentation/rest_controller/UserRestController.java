@@ -21,9 +21,9 @@ public class UserRestController {
         return this.userService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public User findUserById(@PathVariable Long id){
-        return this.userService.findById(id);
+    @GetMapping("/{userId}")
+    public User findUserById(@PathVariable String userId){
+        return this.userService.findById(userId);
     }
 
     @PostMapping
@@ -31,13 +31,13 @@ public class UserRestController {
         return this.userService.save(user);
     }
 
-    @PutMapping("/{id}")
-    public User update(@PathVariable Long id, User user){
-        return this.userService.update(id, user);
+    @PutMapping("/{userId}")
+    public User update(@PathVariable String userId, User user){
+        return this.userService.update(userId, user);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
-        this.userService.deleteById(id);
+    @DeleteMapping("/{userId}")
+    public void deleteById(@PathVariable String userId){
+        this.userService.deleteById(userId);
     }
 }

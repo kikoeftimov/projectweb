@@ -14,8 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/courses")
@@ -25,6 +30,8 @@ public class CoursesController {
     private final AuthorService authorService;
     private final CategoryService categoryService;
     private final PriceService priceService;
+    private List<Course> courses = new ArrayList<Course>();
+
 
     public CoursesController(CourseService courseService, AuthorService authorService, CategoryService categoryService, PriceService priceService) {
         this.courseService = courseService;
@@ -33,10 +40,21 @@ public class CoursesController {
         this.priceService = priceService;
     }
 
+//    @GetMapping
+//    public String getCoursesPage(Model model){
+//        List<Course> courses = this.courseService.findAll();
+//        model.addAttribute("courses", courses);
+//        return "courses";
+//    }
+
     @GetMapping
-    public String getCoursesPage(Model model){
-        List<Course> courses = this.courseService.findAll();
-        model.addAttribute("courses", courses);
+    public String showCourses(HttpServletRequest request, @RequestParam(required = false) String query){
+        List<Course> courses = query == null || query.isEmpty() ?
+                this.courseService.findAll() : this.courseService.searchCourses(query);
+
+        request.setAttribute("courses", courses);
+        request.setAttribute("bodyContent", "courses");
+        request.setAttribute("query", query);
         return "courses";
     }
 
@@ -51,6 +69,38 @@ public class CoursesController {
     model.addAttribute("course", new Course());
     return "add-course";
     }
+
+
+    @GetMapping("/toCart")
+    public String getCart(Model model){
+        model.addAttribute("courses", courses);
+        int total = 0;
+        for (Course course : courses) {
+            total+=course.getPrice().getPrice();
+        }
+        model.addAttribute("total", total);
+        return "toCart";
+    }
+
+
+    @PostMapping("/{id}/toCart")
+    public String addToCart(Model model, @PathVariable Long id){
+
+        try{
+            Course course = this.courseService.findById(id);
+            this.courses.add(course);
+            model.addAttribute("courses", courses);
+            model.addAttribute("name", course.getName());
+            model.addAttribute("description", course.getDescription());
+            model.addAttribute("author", course.getAuthor());
+            model.addAttribute("category", course.getCategory());
+            model.addAttribute("price", course.getPrice());
+            return "redirect:/courses";
+        }catch(RuntimeException ex){
+            return "redirect:/courses";
+        }
+    }
+
 
     @GetMapping("/{id}/name")
     public String getSingleCourse(Model model, @PathVariable Long id){
@@ -120,9 +170,45 @@ public class CoursesController {
         return "redirect:/courses";
     }
 
+    @DeleteMapping("/toCart/{id}/delete")
+    public String deleteCourseFromCartWithDelete(@PathVariable Long id){
+        try{
+            Course course = this.courseService.findById(id);
+            this.courses.remove(course);
+            return "toCart";
+        }
+        catch(RuntimeException ex){
+            return "redirect:/courses";
+        }
+    }
+
+    @PostMapping("/toCart/{id}/delete")
+    public String deleteCourseFromCart(@PathVariable Long id){
+
+        try{
+            Course course = this.courseService.findById(id);
+            ArrayList<Course> c2 = (ArrayList<Course>) courses;
+            c2.remove(course);
+            return "toCart";
+        }
+        catch(RuntimeException ex){
+            return "redirect:/courses";
+        }
+    }
+
     @PostMapping("/{id}/delete")
     public String deleteWithPost(@PathVariable Long id){
         this.courseService.deleteById(id);
         return "redirect:/courses";
+    }
+
+
+    @PostMapping("/toCart/reset")
+    public String resetPage(Model model){
+        ArrayList<Course> c2 = (ArrayList<Course>) courses;
+        this.courses.removeAll(c2);
+        int total = 0;
+        model.addAttribute("total", total);
+        return "toCart";
     }
 }

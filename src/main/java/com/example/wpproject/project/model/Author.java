@@ -9,18 +9,10 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String surname;
-
-    @ManyToMany(mappedBy = "authorList")
-    private List<User> userList;
-
-    public Author(Long id, String name, String surname, List<User> userList) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.userList = userList;
-    }
 
     public Author(){
 
@@ -50,11 +42,4 @@ public class Author {
         this.surname = surname;
     }
 
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
 }

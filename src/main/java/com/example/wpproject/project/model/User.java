@@ -1,34 +1,16 @@
 package com.example.wpproject.project.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String username;
 
-    @ManyToMany
-    private List<Author> authorList;
+    private String password;
 
     public User() {
-    }
-
-    public User(Long id, String username, List<Author> authorList) {
-        this.id = id;
-        this.username = username;
-        this.authorList = authorList;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -39,21 +21,12 @@ public class User {
         this.username = username;
     }
 
-    public List<Author> getAuthorList() {
-        return authorList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAuthorList(List<Author> authorList) {
-        this.authorList = authorList;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public void follow(Author author) {
-        this.authorList.add(author);
-        author.getUserList().add(this);
-    }
-
-    public void unFollow(Author author) {
-        this.authorList.remove(author);
-        author.getUserList().remove(this);
-    }
 }

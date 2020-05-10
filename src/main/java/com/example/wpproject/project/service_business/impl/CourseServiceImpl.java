@@ -1,10 +1,12 @@
 package com.example.wpproject.project.service_business.impl;
 
 import com.example.wpproject.project.model.*;
+import com.example.wpproject.project.model.exceptions.CourseIsAlreadyInShoppingCard;
 import com.example.wpproject.project.model.exceptions.CourseNotFoundException;
 import com.example.wpproject.project.repository_persistence.CourseRepository;
 import com.example.wpproject.project.service_business.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,14 +19,12 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CategoryService categoryService;
     private final AuthorService authorService;
-    private final PartService partService;
     private final PriceService priceService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CategoryService categoryService, AuthorService authorService, PartService partService, PriceService priceService) {
+    public CourseServiceImpl(CourseRepository courseRepository, CategoryService categoryService, AuthorService authorService, PriceService priceService) {
         this.courseRepository = courseRepository;
         this.categoryService = categoryService;
         this.authorService = authorService;
-        this.partService = partService;
         this.priceService = priceService;
     }
 
@@ -76,7 +76,6 @@ public class CourseServiceImpl implements CourseService {
         c.setPrice(price);
 
         c.setDescription(course.getDescription());
-        c.setPart(course.getPart());
 
         if (image != null && !image.getName().isEmpty()) {
             byte[] bytes = image.getBytes();
@@ -88,6 +87,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteById(Long id) {
+        Course course = this.findById(id);
+        if(course.getCarts().size() > 0){
+            throw new CourseIsAlreadyInShoppingCard(course.getName());
+        }
         this.courseRepository.deleteById(id);
     }
 

@@ -23,8 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
-        return this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    public User findById(String userId) {
+        return this.userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
     }
 
     @Override
@@ -33,15 +34,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(Long id, User user) {
-        User u = this.findById(id);
+    public User update(String userId, User user) {
+        User u = this.findById(userId);
         u.setUsername(user.getUsername());
-        u.setAuthorList(user.getAuthorList());
         return this.userRepository.save(u);
     }
 
     @Override
-    public void deleteById(Long id) {
-        this.userRepository.deleteById(id);
+    public void deleteById(String userId) {
+        this.userRepository.deleteById(userId);
     }
 }

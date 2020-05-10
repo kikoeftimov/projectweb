@@ -36,16 +36,6 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" method="GET">
-                <input name="query"
-                       class="form-control mr-sm-2"
-                       type="text"
-                       th:value="${query}"
-                       placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-
             <form>
                 <a class="btn btn-success btn-sm ml-3" href="/login">
                     <i class="fa fa-sign-in"></i> Login
@@ -63,28 +53,10 @@
     </div>
 </section>
 
-<div th:if="${param.error}">
-    <h2 class="text-center text-danger" th:text="${param.error}"></h2>
-</div>
-
-<div class="row">
-    <div class="col-md-9 col-sm-9"></div>
-
-    <div class="col-md-3 col-sm-3">
-        <form action="/courses/toCart" method="get">
-            <button class="btn btn-success" style="width: 150px; margin-left: 20px;">Shopping cart
-                <span class="badge badge-light"></span>
-            </button>
-        </form>
-    </div>
-</div>
-
-
-<br>
 
 <div class="container mb-4">
     <div class="row">
-        <div class="col-12" th:if="${courses.size() > 0}">
+        <div class="col-12">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -106,42 +78,56 @@
                         <td th:text="${course.getPrice() != null} ? ${course.getPrice().getPrice() + '$'}: 'No price'"></td>
                         <td th:text="${course.getCategory() != null} ? ${course.getCategory().getName()} : 'No Category'"></td>
                         <td th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()}  : 'No Author'"></td>
-                        <td class="text-right">
-                            <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fa fa-trash">Delete</i>
-                                </button>
-                            </form>
-                            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="btn btn-sm btn-info"><i
-                                    class="fa fa-trash">Edit</i>
-                            </a>
-                            <a th:href="@{/courses/{id}/name(id=${course.getId()})}" class="btn btn-sm btn-success">
-                                <i class="fa fa-external-link">Link</i>
-                            </a>
-
-                            <form th:action="@{/courses/{id}/toCart(id=${course.getId()})}" th:method="post">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    <i class="fa fa-smile">Add to cart</i>
-                                </button>
-                            </form>
-                        </td>
+<!--                        <td class="text-right">-->
+<!--                            <form th:action="@{/courses/toCart/{id}/delete(id=${course.getId()})}" th:method="delete">-->
+<!--                                <button type="submit" class="btn btn-sm btn-danger">-->
+<!--                                    <i class="fa fa-trash">Delete</i>-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                        </td>-->
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="col mb-2">
+    </div>
+</div>
+
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-sm-2">
+            <form th:action="@{/courses}">
+                <button type="submit" class="btn btn-outline-info" style="margin-left: 25px;">Continue Shopping</button>
+            </form>
+        </div>
+        <div class="col-md-2 col-sm-2">
+            <form th:action="@{/courses/toCart/reset}" th:method="delete">
+                <button type="submit" class="btn btn-outline-info">Clear card</button>
+            </form>
+        </div>
+        <div class="col-md-1 col-sm-1"></div>
+        <div class="col-md-2 col-sm-2" >
+            <div class="row" th:each="course : ${courses}" >
+<!--                Total: <span th:text="'$' + ${course.getPrice().getPrice()}"></span>-->
+            </div>
+            <div class="row" style="font-size: 30px; font-weight: bold;">
+                Total: <span th:text="'$' + ${total}"></span>
+            </div>
+            <br>
             <div class="row">
-                <div class="col-sm-5 col-md-5"></div>
-                <div class="col-sm-2  col-md-2">
-                    <a href="/courses/new" class="btn btn-block btn-info">Add new course</a>
-                </div>
-                <div class="col-sm-5 com-md-5"></div>
+                <form th:action="@{/courses}">
+                    <button type="submit" class="btn btn-primary">Process Checkout</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<br>
+<br>
+<br>
 <footer class="text-black-50">
     <div class="container text-center">
         <div class="row" style="margin-left: 300px;">
