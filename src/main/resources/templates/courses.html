@@ -13,6 +13,8 @@
     <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
     <script src="/assets/vendor/popper.min.js"></script>
     <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -72,7 +74,8 @@
 
     <div class="col-md-3 col-sm-3">
         <form action="/courses/toCart" method="get">
-            <button class="btn btn-success" style="width: 150px; margin-left: 20px;">Shopping cart
+            <button class="btn btn-success" style="width: 150px; margin-left: 20px;">
+                <i class="fa fa-shopping-cart"></i> Shopping cart
                 <span class="badge badge-light"></span>
             </button>
         </form>
@@ -108,20 +111,20 @@
                         <td th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()}  : 'No Author'"></td>
                         <td class="text-right">
                             <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">
-                                <button type="submit" class="btn btn-sm btn-danger">
-                                    <i class="fa fa-trash">Delete</i>
+                                <button type="submit" class="btn btn-sm btn-danger" style="max-width: 80px;">
+                                    <i class="fa fa-trash"></i>Delete
                                 </button>
                             </form>
-                            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="btn btn-sm btn-info"><i
-                                    class="fa fa-trash">Edit</i>
+                            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="btn btn-sm btn-info" style="max-width: 80px;"><i
+                                    class="fa fa-edit"></i>Edit
                             </a>
-                            <a th:href="@{/courses/{id}/name(id=${course.getId()})}" class="btn btn-sm btn-success">
-                                <i class="fa fa-external-link">Link</i>
+                            <a th:href="@{/courses/{id}/name(id=${course.getId()})}" class="btn btn-sm btn-success" style="max-width: 80px;">
+                                <i class="fa fa-external-link"></i>Link
                             </a>
 
                             <form th:action="@{/courses/{id}/toCart(id=${course.getId()})}" th:method="post">
-                                <button type="submit" class="btn btn-sm btn-primary">
-                                    <i class="fa fa-smile">Add to cart</i>
+                                <button type="submit" class="btn btn-sm btn-primary" style="max-width: 80px;">
+                                    <i class="fa fa-shopping-cart"></i>Add
                                 </button>
                             </form>
                         </td>
@@ -134,7 +137,8 @@
             <div class="row">
                 <div class="col-sm-5 col-md-5"></div>
                 <div class="col-sm-2  col-md-2">
-                    <a href="/courses/new" class="btn btn-block btn-info">Add new course</a>
+                    <a href="/courses/new" class="btn btn-block btn-info">
+                        Add new course<i class="fa fa-arrow-circle-right" style="margin-left: 5px;"></i></a>
                 </div>
                 <div class="col-sm-5 com-md-5"></div>
             </div>

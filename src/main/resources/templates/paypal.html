@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-4 col-sm-4"></div>
+
+        <div class="col-md-4 col-sm-4" style="background-color: lightgrey; height: 400px;" >
+                <form method="post"  action="/paypal/pay">
+                    <div class="form-group">
+                        <h2 style="text-align: center">Payment</h2>
+                        <br>
+                        <label>Accepted Cards</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                    </div>
+                        <br>
+    <!--                    <label for="price">Total</label>-->
+    <!--                    <input type="text" id="price" name="price">-->
+
+                        <div class="form-group">
+                            <label for="currency">Currency</label>
+                            <select id="currency" name="currency" class="form-control">
+                                <option>Macedonian denar</option>
+                                <option>€ (Euro)</option>
+                                <option>$ (US Dollar)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="method">Payment Method</label>
+                            <select id="method" name="method" class="form-control">
+                                <option>Paypal Account</option>
+                                <option>Debit card</option>
+                            </select>
+                        </div>
+
+                    <button class="btn btn-success" type="submit" style="max-width: 200px; margin-left: 80px; margin-top: 10px;">
+                        <i class="fa fa-cc-paypal"></i> Continue to checkout
+                    </button>
+                </form>
+        </div>
+        <div class="col-md-4 col-sm-4"></div>
+    </div>
+</div>
+</body>
+</html>

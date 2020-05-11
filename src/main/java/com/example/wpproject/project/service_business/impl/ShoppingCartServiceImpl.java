@@ -7,10 +7,7 @@ import com.example.wpproject.project.model.enumerations.CartStatus;
 import com.example.wpproject.project.model.exceptions.CardIsAlreadyCreatedForThisUser;
 import com.example.wpproject.project.model.exceptions.ShoppingCardIsNotActiveException;
 import com.example.wpproject.project.repository_persistence.ShoppingCartRepository;
-import com.example.wpproject.project.service_business.CourseService;
-import com.example.wpproject.project.service_business.PaymentService;
-import com.example.wpproject.project.service_business.ShoppingCartService;
-import com.example.wpproject.project.service_business.UserService;
+import com.example.wpproject.project.service_business.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +22,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserService userService;
     private final CourseService courseService;
     private final PaymentService paymentService;
+    private final PaypalService paypalService;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, UserService userService, CourseService courseService, PaymentService paymentService) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository, UserService userService, CourseService courseService, PaymentService paymentService, PaypalService paypalService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.userService = userService;
         this.courseService = courseService;
         this.paymentService = paymentService;
+        this.paypalService = paypalService;
     }
 
 
