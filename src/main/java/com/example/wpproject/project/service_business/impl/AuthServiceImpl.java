@@ -16,16 +16,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User getCurrentUser() {
-        return this.userRepository.findById("current-user")
+        return this.userRepository.findById(1)
                 .orElseGet(() -> {
                     User user = new User();
-                    user.setUsername("current-user");
+                    user.setName("current-user");
                     return this.userRepository.save(user);
                 });
     }
 
     @Override
-    public String getCurrentUserId() {
-        return this.getCurrentUser().getUsername();
+    public Integer getCurrentUserId() {
+        return this.getCurrentUser().getId();
     }
 }

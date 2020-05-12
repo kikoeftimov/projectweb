@@ -19,7 +19,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/home">Courses page</a>
+        <a class="navbar-brand" href="/users">Courses page</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,15 +27,15 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
-                <li class="nav-item m-auto">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/courses">Courses</a>
-                </li>
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" href="/courses/new">Add new Course</a>-->
+<!--                <li class="nav-item m-auto">-->
+<!--                    <a class="nav-link" href="/home">Home</a>-->
 <!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/courses">Courses</a>-->
+<!--                </li>-->
+                <!--                <li class="nav-item">-->
+                <!--                    <a class="nav-link" href="/courses/new">Add new Course</a>-->
+                <!--                </li>-->
             </ul>
 
             <form>
@@ -80,13 +80,13 @@
                         <td th:text="${course.getPrice() != null} ? ${course.getPrice().getPrice() + '$'}: 'No price'"></td>
                         <td th:text="${course.getCategory() != null} ? ${course.getCategory().getName()} : 'No Category'"></td>
                         <td th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()}  : 'No Author'"></td>
-<!--                        <td class="text-right">-->
-<!--                            <form th:action="@{/courses/toCart/{id}/delete(id=${course.getId()})}" th:method="delete">-->
-<!--                                <button type="submit" class="btn btn-sm btn-danger">-->
-<!--                                    <i class="fa fa-trash">Delete</i>-->
-<!--                                </button>-->
-<!--                            </form>-->
-<!--                        </td>-->
+                        <!--                        <td class="text-right">-->
+                        <!--                            <form th:action="@{/courses/toCart/{id}/delete(id=${course.getId()})}" th:method="delete">-->
+                        <!--                                <button type="submit" class="btn btn-sm btn-danger">-->
+                        <!--                                    <i class="fa fa-trash">Delete</i>-->
+                        <!--                                </button>-->
+                        <!--                            </form>-->
+                        <!--                        </td>-->
                     </tr>
                     </tbody>
                 </table>
@@ -100,14 +100,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-2 col-sm-2">
-            <form th:action="@{/courses}">
+            <form th:action="@{/users}">
                 <button type="submit" class="btn btn-outline-info" style="margin-left: 25px;">
                     <i class="fa fa-shopping-cart"></i> Continue Shopping
                 </button>
             </form>
         </div>
         <div class="col-md-2 col-sm-2">
-            <form th:action="@{/courses/toCart/reset}" th:method="delete">
+            <form th:action="@{/users/toCart/reset}" th:method="delete">
                 <button type="submit" class="btn btn-outline-info" style="margin-left: 15px;">
                     <i class="fa fa-trash"></i> Clear card
                 </button>
@@ -116,7 +116,7 @@
         <div class="col-md-1 col-sm-1"></div>
         <div class="col-md-2 col-sm-2" >
             <div class="row" th:each="course : ${courses}" >
-<!--                Total: <span th:text="'$' + ${course.getPrice().getPrice()}"></span>-->
+                <!--                Total: <span th:text="'$' + ${course.getPrice().getPrice()}"></span>-->
             </div>
             <div class="row" style="font-size: 30px; font-weight: bold;">
                 Total: <span th:text="'$' + ${total}"></span>

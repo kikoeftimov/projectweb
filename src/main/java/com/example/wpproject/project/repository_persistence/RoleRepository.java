@@ -1,9 +1,11 @@
 package com.example.wpproject.project.repository_persistence;
 
-import com.example.wpproject.project.model.User;
+import com.example.wpproject.project.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
+
+    Role findByRole(String role);
 }

@@ -22,22 +22,22 @@ public class UserRestController {
     }
 
     @GetMapping("/{userId}")
-    public User findUserById(@PathVariable String userId){
+    public User findUserById(@PathVariable Integer userId){
         return this.userService.findById(userId);
     }
 
     @PostMapping
-    public User saveUser(User user){
-        return this.userService.save(user);
+    public void saveUser(User user){
+        this.userService.save(user);
     }
 
     @PutMapping("/{userId}")
-    public User update(@PathVariable String userId, User user){
+    public User update(@PathVariable Integer userId, User user){
         return this.userService.update(userId, user);
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteById(@PathVariable String userId){
+    public void deleteById(@PathVariable Integer userId){
         this.userService.deleteById(userId);
     }
 }

@@ -19,7 +19,7 @@
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/home">Courses page</a>
+        <a class="navbar-brand" href="/users">Courses page</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
                 aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -27,15 +27,15 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
             <ul class="navbar-nav m-auto">
-                <li class="nav-item m-auto">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/courses">Courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/courses/new">Add new Course</a>
-                </li>
+<!--                <li class="nav-item m-auto">-->
+<!--                    <a class="nav-link" href="/home">Home</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="/users">Courses</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/courses/new">Add new Course</a>-->
+<!--                </li>-->
             </ul>
 
             <form class="form-inline my-2 my-lg-0" method="GET">
@@ -73,7 +73,7 @@
     <div class="col-md-9 col-sm-9"></div>
 
     <div class="col-md-3 col-sm-3">
-        <form action="/courses/toCart" method="get">
+        <form action="/users/toCart" method="get">
             <button class="btn btn-success" style="width: 150px; margin-left: 20px;">
                 <i class="fa fa-shopping-cart"></i> Shopping cart
                 <span class="badge badge-light"></span>
@@ -87,7 +87,7 @@
 
 <div class="container mb-4">
     <div class="row">
-        <div class="col-12" th:if="${courses.size() > 0}">
+        <div class="col-12" > <!--th:if="${courses.size() > 0}" -->
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -110,20 +110,19 @@
                         <td th:text="${course.getCategory() != null} ? ${course.getCategory().getName()} : 'No Category'"></td>
                         <td th:text="${course.getAuthor() != null} ? ${course.getAuthor().getName()} + ' ' + ${course.getAuthor().getSurname()}  : 'No Author'"></td>
                         <td class="text-right">
-                            <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">
-                                <button type="submit" class="btn btn-sm btn-danger" style="max-width: 80px;">
-                                    <i class="fa fa-trash"></i>Delete
-                                </button>
-                            </form>
-                            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="btn btn-sm" style="max-width: 80px;background-color: lightblue"><i
-                                    class="fa fa-edit"></i>Edit
-                            </a>
-                            <a th:href="@{/courses/{id}/name(id=${course.getId()})}" class="btn btn-sm btn-success" style="max-width: 80px;">
+<!--                            <form th:action="@{/courses/{id}/delete(id=${course.getId()})}" th:method="delete">-->
+<!--                                <button type="submit" class="btn btn-sm btn-danger" style="max-width: 80px;">-->
+<!--                                    <i class="fa fa-trash"></i>Delete-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                            <a th:href="@{/courses/{id}/edit(id=${course.getId()})}" class="btn btn-sm" style="max-width: 80px; background-color: dodgerblue"><i-->
+<!--                                    class="fa fa-edit"></i>Edit-->
+<!--                            </a>-->
+                            <a th:href="@{/users/{id}/name(id=${course.getId()})}" class="btn btn-sm btn-success" style="max-width: 80px;">
                                 <i class="fa fa-external-link"></i>Link
                             </a>
-                            <br>
 
-                            <form th:action="@{/courses/{id}/toCart(id=${course.getId()})}" th:method="post">
+                            <form th:action="@{/users/{id}/toCart(id=${course.getId()})}" th:method="post">
                                 <button type="submit" class="btn btn-sm btn-primary" style="max-width: 80px;">
                                     <i class="fa fa-shopping-cart"></i>Add
                                 </button>
@@ -134,16 +133,16 @@
                 </table>
             </div>
         </div>
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-5 col-md-5"></div>
-                <div class="col-sm-2  col-md-2">
-                    <a href="/courses/new" class="btn btn-block btn-info">
-                        Add new course<i class="fa fa-arrow-circle-right" style="margin-left: 5px;"></i></a>
-                </div>
-                <div class="col-sm-5 com-md-5"></div>
-            </div>
-        </div>
+<!--        <div class="col mb-2">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-5 col-md-5"></div>-->
+<!--                <div class="col-sm-2  col-md-2">-->
+<!--                    <a href="/courses/new" class="btn btn-block btn-info">-->
+<!--                        Add new course<i class="fa fa-arrow-circle-right" style="margin-left: 5px;"></i></a>-->
+<!--                </div>-->
+<!--                <div class="col-sm-5 com-md-5"></div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 

@@ -1,13 +1,8 @@
 package com.example.wpproject.project.web_presentation.controller;
 
-import com.example.wpproject.project.model.Author;
-import com.example.wpproject.project.model.Category;
-import com.example.wpproject.project.model.Course;
-import com.example.wpproject.project.model.Price;
-import com.example.wpproject.project.service_business.AuthorService;
-import com.example.wpproject.project.service_business.CategoryService;
-import com.example.wpproject.project.service_business.CourseService;
-import com.example.wpproject.project.service_business.PriceService;
+import com.example.wpproject.project.model.*;
+import com.example.wpproject.project.model.exceptions.adminDoesNotExistException;
+import com.example.wpproject.project.service_business.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -30,14 +25,16 @@ public class CoursesController {
     private final AuthorService authorService;
     private final CategoryService categoryService;
     private final PriceService priceService;
+    private final UserService userService;
     private List<Course> courses = new ArrayList<Course>();
 
 
-    public CoursesController(CourseService courseService, AuthorService authorService, CategoryService categoryService, PriceService priceService) {
+    public CoursesController(CourseService courseService, AuthorService authorService, CategoryService categoryService, PriceService priceService, UserService userService) {
         this.courseService = courseService;
         this.authorService = authorService;
         this.categoryService = categoryService;
         this.priceService = priceService;
+        this.userService = userService;
     }
 
 //    @GetMapping
@@ -55,6 +52,13 @@ public class CoursesController {
         request.setAttribute("courses", courses);
         request.setAttribute("bodyContent", "courses");
         request.setAttribute("query", query);
+
+//        User user = this.userService.findById(id);
+//        if(user.getRoles()
+//                .stream()
+//                .anyMatch(s -> s.getRole().equals("SITE_USER"))){
+//            return "user";
+//        }
         return "courses";
     }
 

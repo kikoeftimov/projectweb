@@ -5,5 +5,5 @@ import com.example.wpproject.project.model.User;
 public interface AuthService {
 
     User getCurrentUser();
-    String getCurrentUserId();
+    Integer getCurrentUserId();
 }

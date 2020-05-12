@@ -34,29 +34,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
     @Override
-    public ShoppingCart getActiveShoppingCart(String username) {
+    public ShoppingCart getActiveShoppingCart(Integer userId) {
         return this.shoppingCartRepository
-                .findByUserUsernameAndStatus(username, CartStatus.CREATED)
+                .findByUserIdAndStatus(userId, CartStatus.CREATED)
                 .orElseGet(() -> {
                     ShoppingCart shoppingCart = new ShoppingCart();
-                    User user = this.userService.findById(username);
+                    User user = this.userService.findById(userId);
                     shoppingCart.setUser(user);
                     return this.shoppingCartRepository.save(shoppingCart);
                 });
     }
 
     @Override
-    public List<ShoppingCart> findAllByUsername(String username) {
-        return this.shoppingCartRepository.findAllByUserUsername(username);
+    public List<ShoppingCart> findAllByUsername(Integer userId) {
+        return this.shoppingCartRepository.findAllByUserId(userId);
     }
 
     @Override
-    public ShoppingCart createNewShoppingCart(String username) {
-        User user = this.userService.findById(username);
+    public ShoppingCart createNewShoppingCart(Integer userId) {
+        User user = this.userService.findById(userId);
         if(this.shoppingCartRepository
-                .existsByUserUsernameAndStatus(user.getUsername(), CartStatus.CREATED))
+                .existsByUserIdAndStatus(user.getId(), CartStatus.CREATED))
         {
-            throw new CardIsAlreadyCreatedForThisUser(username);
+            throw new CardIsAlreadyCreatedForThisUser(userId);
         }
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setStatus(CartStatus.CREATED);
@@ -66,8 +66,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCart addCourseToShoppingCart(String username, Long courseId) {
-        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+    public ShoppingCart addCourseToShoppingCart(Integer userId, Long courseId) {
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(userId);
         Course course = this.courseService.findById(courseId);
 
 //        for (Course course1 : shoppingCart.getCourses()) {
@@ -83,8 +83,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCart removeCourseFromShoppingCart(String username, Long courseId) {
-        ShoppingCart shoppingCart = this.getActiveShoppingCart(username);
+    public ShoppingCart removeCourseFromShoppingCart(Integer userId, Long courseId) {
+        ShoppingCart shoppingCart = this.getActiveShoppingCart(userId);
         shoppingCart.setCourses(
                 shoppingCart.getCourses()
                         .stream()
@@ -95,10 +95,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart cancelShoppingCart(String username) {
+    public ShoppingCart cancelShoppingCart(Integer userId) {
         ShoppingCart shoppingCart = this.shoppingCartRepository
-                .findByUserUsernameAndStatus(username, CartStatus.CREATED)
-                .orElseThrow(() -> new ShoppingCardIsNotActiveException(username));
+                .findByUserIdAndStatus(userId, CartStatus.CREATED)
+                .orElseThrow(() -> new ShoppingCardIsNotActiveException(userId));
 
         shoppingCart.setStatus(CartStatus.CANCELLED);
         shoppingCart.setFinished(LocalDateTime.now());
@@ -107,10 +107,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCart checkoutShoppingCart(String username) {
+    public ShoppingCart checkoutShoppingCart(Integer userId) {
         ShoppingCart shoppingCart = this.shoppingCartRepository
-                .findByUserUsernameAndStatus(username, CartStatus.CREATED)
-                .orElseThrow(() -> new ShoppingCardIsNotActiveException(username));
+                .findByUserIdAndStatus(userId, CartStatus.CREATED)
+                .orElseThrow(() -> new ShoppingCardIsNotActiveException(userId));
 
         List<Course> courses = shoppingCart.getCourses();
         float price=0;

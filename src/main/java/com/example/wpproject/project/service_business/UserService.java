@@ -7,8 +7,10 @@ import java.util.List;
 public interface UserService {
 
     List<User> findAll();
-    User findById(String userId);
-    User save(User user);
-    User update(String userId, User user);
-    void deleteById(String userId);
+    User findById(Integer userId);
+    void save(User user);
+    User update(Integer userId, User user);
+    void deleteById(Integer userId);
+
+    boolean isUserAlreadyPresent(User user);
 }

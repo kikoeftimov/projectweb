@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface ShoppingCartService {
 
-    ShoppingCart getActiveShoppingCart(String username);
+    ShoppingCart getActiveShoppingCart(Integer userId);
 
-    List<ShoppingCart> findAllByUsername(String username);
+    List<ShoppingCart> findAllByUsername(Integer userId);
 
-    ShoppingCart createNewShoppingCart(String username);
+    ShoppingCart createNewShoppingCart(Integer userId);
 
-    ShoppingCart addCourseToShoppingCart(String username, Long courseId);
+    ShoppingCart addCourseToShoppingCart(Integer userId, Long courseId);
 
-    ShoppingCart removeCourseFromShoppingCart(String username, Long courseId);
+    ShoppingCart removeCourseFromShoppingCart(Integer userId, Long courseId);
 
-    ShoppingCart cancelShoppingCart(String username);
+    ShoppingCart cancelShoppingCart(Integer userId);
 
-    ShoppingCart checkoutShoppingCart(String username);
+    ShoppingCart checkoutShoppingCart(Integer userId);
 }

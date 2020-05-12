@@ -1,302 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8"/>
     <title>Online courses</title>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
 
-<link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
-<script src="/assets/vendor/jquery/jquery.min.js"></script>
-<script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-<script src="/assets/vendor/popper.min.js"></script>
-<script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+    <script src="/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<style>
-    html {
-        background-color: #56baed;
-    }
 
-    body {
-        font-family: "Poppins", sans-serif;
-        height: 100vh;
-    }
+<body style="background-color:#ededed;">
+<div style="background-color:#337ab7;height:50px;"></div>
+<div class="container-fluid">
+    <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 80px;background-color:#fff;padding:20px;border:solid 1px #ddd; margin-left: 300px;">
+        <!-- <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" /> -->
+        <form th:action="@{/login}" method="POST" class="form-group">
+            <h3 th:text="Login"></h3>
+            <br />
+            <input type="text" id="email" name="email" th:placeholder="Email" class="form-control" />
+            <br />
+            <input type="password" th:placeholder="Password" id="password" name="password" class="form-control" />
+            <br />
 
-    a {
-        color: #92badd;
-        display:inline-block;
-        text-decoration: none;
-        font-weight: 400;
-    }
+            <div align="center" th:if="${param.error}">
+                <p style="font-size: 20px; color: #FF1C19;">Email or Password is invalid.</p>
+            </div>
 
-    h2 {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 600;
-        text-transform: uppercase;
-        display:inline-block;
-        margin: 40px 8px 10px 8px;
-        color: #cccccc;
-    }
+            <button class="btn btn-lg btn-primary" name="Submit" value="Login" type="Submit" th:text="Login" style="margin-right:10px;"></button>
+            <a type="button" class="btn btn-lg btn-success" href="/register">Sign up</a>
 
-
-    .wrapper {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        min-height: 100%;
-        padding: 20px;
-    }
-
-    #formContent {
-        -webkit-border-radius: 10px 10px 10px 10px;
-        border-radius: 10px 10px 10px 10px;
-        background: #fff;
-        padding: 30px;
-        width: 90%;
-        max-width: 450px;
-        position: relative;
-        padding: 0px;
-        -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-        text-align: center;
-    }
-
-    #formFooter {
-        background-color: #f6f6f6;
-        border-top: 1px solid #dce8f1;
-        padding: 25px;
-        text-align: center;
-        -webkit-border-radius: 0 0 10px 10px;
-        border-radius: 0 0 10px 10px;
-    }
-
-
-    h2.inactive {
-        color: #cccccc;
-    }
-
-    h2.active {
-        color: #0d0d0d;
-        border-bottom: 2px solid #5fbae9;
-    }
-
-
-    input[type=button], input[type=submit], input[type=reset]  {
-        background-color: #56baed;
-        border: none;
-        color: white;
-        padding: 15px 80px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        text-transform: uppercase;
-        font-size: 13px;
-        -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-        box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-        margin: 5px 20px 40px 20px;
-        -webkit-transition: all 0.3s ease-in-out;
-        -moz-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-    }
-
-    input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
-        background-color: #39ace7;
-    }
-
-    input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
-        -moz-transform: scale(0.95);
-        -webkit-transform: scale(0.95);
-        -o-transform: scale(0.95);
-        -ms-transform: scale(0.95);
-        transform: scale(0.95);
-    }
-
-    input[type=text] {
-        background-color: #f6f6f6;
-        border: none;
-        color: #0d0d0d;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 5px;
-        width: 85%;
-        border: 2px solid #f6f6f6;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-        -webkit-border-radius: 5px 5px 5px 5px;
-        border-radius: 5px 5px 5px 5px;
-    }
-
-    input[type=text]:focus {
-        background-color: #fff;
-        border-bottom: 2px solid #5fbae9;
-    }
-
-
-    .fadeInDown {
-        -webkit-animation-name: fadeInDown;
-        animation-name: fadeInDown;
-        -webkit-animation-duration: 1s;
-        animation-duration: 1s;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-    }
-
-    @-webkit-keyframes fadeInDown {
-        0% {
-            opacity: 0;
-            -webkit-transform: translate3d(0, -100%, 0);
-            transform: translate3d(0, -100%, 0);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: none;
-            transform: none;
-        }
-    }
-
-    @keyframes fadeInDown {
-        0% {
-            opacity: 0;
-            -webkit-transform: translate3d(0, -100%, 0);
-            transform: translate3d(0, -100%, 0);
-        }
-        100% {
-            opacity: 1;
-            -webkit-transform: none;
-            transform: none;
-        }
-    }
-
-    @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-    .fadeIn {
-        opacity:0;
-        -webkit-animation:fadeIn ease-in 1;
-        -moz-animation:fadeIn ease-in 1;
-        animation:fadeIn ease-in 1;
-
-        -webkit-animation-fill-mode:forwards;
-        -moz-animation-fill-mode:forwards;
-        animation-fill-mode:forwards;
-
-        -webkit-animation-duration:1s;
-        -moz-animation-duration:1s;
-        animation-duration:1s;
-    }
-
-    .fadeIn.first {
-        -webkit-animation-delay: 0.4s;
-        -moz-animation-delay: 0.4s;
-        animation-delay: 0.4s;
-    }
-
-    .fadeIn.second {
-        -webkit-animation-delay: 0.6s;
-        -moz-animation-delay: 0.6s;
-        animation-delay: 0.6s;
-    }
-
-    .fadeIn.third {
-        -webkit-animation-delay: 0.8s;
-        -moz-animation-delay: 0.8s;
-        animation-delay: 0.8s;
-    }
-
-    .fadeIn.fourth {
-        -webkit-animation-delay: 1s;
-        -moz-animation-delay: 1s;
-        animation-delay: 1s;
-    }
-
-    /* Simple CSS3 Fade-in Animation */
-    .underlineHover:after {
-        display: block;
-        left: 0;
-        bottom: -10px;
-        width: 0;
-        height: 2px;
-        background-color: #56baed;
-        content: "";
-        transition: width 0.2s;
-    }
-
-    .underlineHover:hover {
-        color: #0d0d0d;
-    }
-
-    .underlineHover:hover:after{
-        width: 100%;
-    }
-
-    *:focus {
-        outline: none;
-    }
-
-    #icon {
-        width:60%;
-    }
-</style>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/home">Courses page</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
-            <ul class="navbar-nav m-auto">
-                <li class="nav-item m-auto">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/courses">Courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/courses/new">Add new Course</a>
-                </li>
-            </ul>
-
-            <form class="form-inline my-2 my-lg-0">
-                <a class="btn btn-success btn-sm ml-3" href="/login">
-                    <i class="fa fa-sign-in"></i> Login
-                    <span class="badge badge-light"></span>
-                </a>
-            </form>
-        </div>
-    </div>
-</nav>
-
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-
-        <!-- Login Form -->
-        <form method="post" action="/courses" enctype="multipart/form-data">
-
-            <input type="text" id="username" class="fadeIn second" name="username" placeholder="login"/>
-            <input type="text" id="password" class="fadeIn third" name="password" placeholder="password"/>
-            <input type="submit" class="fadeIn fourth" value="Log In"/>
+            <br>
         </form>
-
-        <!-- Remind Password -->
-        <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>
-
     </div>
 </div>
+</body>
+</html>
