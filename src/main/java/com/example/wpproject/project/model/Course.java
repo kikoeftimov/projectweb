@@ -29,8 +29,9 @@ public class Course {
     @Lob
     private String imageBase64;
 
+
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(mappedBy = "courses")
     private List<ShoppingCart> carts;
 
     public Course() {

@@ -2,6 +2,7 @@ package com.example.wpproject.project.service_business.impl;
 
 import com.example.wpproject.project.model.Role;
 import com.example.wpproject.project.model.User;
+import com.example.wpproject.project.model.exceptions.UserAlreadyExistsException;
 import com.example.wpproject.project.model.exceptions.UserNotFoundException;
 import com.example.wpproject.project.repository_persistence.RoleRepository;
 import com.example.wpproject.project.repository_persistence.UserRepository;
@@ -63,6 +64,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserAlreadyPresent(User user) {
+        List<User> users = this.findAll();
+        for(User u : users){
+            if(u.getEmail().equals(user.getEmail())){
+                throw new UserAlreadyExistsException(user.getName());
+            }
+        }
         return false;
     }
 }

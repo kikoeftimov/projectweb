@@ -4,6 +4,7 @@ import com.example.wpproject.project.model.enumerations.CartStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class ShoppingCart {
     @JoinTable(name = "cart_courses",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     public ShoppingCart(){
 

@@ -1,4 +1,4 @@
-package com.example.wpproject.project.model;
+package com.example.wpproject.project.model.dto;
 
 
 public class Order {

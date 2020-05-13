@@ -1,10 +1,13 @@
 package com.example.wpproject.project.service_business;
 
+import com.example.wpproject.project.model.dto.ChargeRequest;
 import com.example.wpproject.project.model.ShoppingCart;
 
 import java.util.List;
 
 public interface ShoppingCartService {
+
+    ShoppingCart findActiveShoppingCartByUserId(Integer userId);
 
     ShoppingCart getActiveShoppingCart(Integer userId);
 
@@ -18,5 +21,5 @@ public interface ShoppingCartService {
 
     ShoppingCart cancelShoppingCart(Integer userId);
 
-    ShoppingCart checkoutShoppingCart(Integer userId);
+    ShoppingCart checkoutShoppingCart(Integer userId, ChargeRequest chargeRequest);
 }

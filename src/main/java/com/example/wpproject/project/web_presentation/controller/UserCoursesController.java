@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/users")
-public class UserCoursesController {
+public class    UserCoursesController {
 
     private final CourseService courseService;
     private final AuthorService authorService;

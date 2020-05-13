@@ -3,6 +3,7 @@ package com.example.wpproject.project.web_presentation.controller;
 import com.example.wpproject.project.model.User;
 import com.example.wpproject.project.service_business.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,11 @@ public class AuthenticationController {
 
     @GetMapping("/")
     public String indexPage() {
-        return "redirect:/courses";
+        return "redirect:/login";
     }
 
     @GetMapping(value = { "/login" })
-    public ModelAndView login() {
+    public ModelAndView login(Model model) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login"); // resources/template/login.html
         return modelAndView;

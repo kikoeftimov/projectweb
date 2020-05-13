@@ -1,13 +1,18 @@
 package com.example.wpproject.project.service_business.impl;
 
+import com.example.wpproject.project.model.dto.ChargeRequest;
 import com.example.wpproject.project.model.Course;
 import com.example.wpproject.project.model.ShoppingCart;
 import com.example.wpproject.project.model.User;
 import com.example.wpproject.project.model.enumerations.CartStatus;
 import com.example.wpproject.project.model.exceptions.CardIsAlreadyCreatedForThisUser;
+import com.example.wpproject.project.model.exceptions.CourseIsAlreadyInShoppingCard;
 import com.example.wpproject.project.model.exceptions.ShoppingCardIsNotActiveException;
+import com.example.wpproject.project.model.exceptions.TransactionFailedException;
 import com.example.wpproject.project.repository_persistence.ShoppingCartRepository;
 import com.example.wpproject.project.service_business.*;
+import com.stripe.exception.*;
+import com.stripe.model.Charge;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +37,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.paypalService = paypalService;
     }
 
+
+    @Override
+    public ShoppingCart findActiveShoppingCartByUserId(Integer userId) {
+        return this.shoppingCartRepository.findByUserIdAndStatus(userId, CartStatus.CREATED)
+                .orElseThrow(() -> new ShoppingCardIsNotActiveException(userId));
+
+    }
 
     @Override
     public ShoppingCart getActiveShoppingCart(Integer userId) {
@@ -70,13 +82,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = this.getActiveShoppingCart(userId);
         Course course = this.courseService.findById(courseId);
 
-//        for (Course course1 : shoppingCart.getCourses()) {
-//            if(course == course1){
-//                continue;
-//            }
-//            shoppingCart.getCourses().add(course);
-//        }
-
+        for (Course c : shoppingCart.getCourses()) {
+            if(c.getId().equals(courseId)){
+                throw new CourseIsAlreadyInShoppingCard(course.getName());
+            }
+        }
         shoppingCart.getCourses().add(course);
         return this.shoppingCartRepository.save(shoppingCart);
     }
@@ -107,7 +117,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCart checkoutShoppingCart(Integer userId) {
+    public ShoppingCart checkoutShoppingCart(Integer userId, ChargeRequest chargeRequest) {
         ShoppingCart shoppingCart = this.shoppingCartRepository
                 .findByUserIdAndStatus(userId, CartStatus.CREATED)
                 .orElseThrow(() -> new ShoppingCardIsNotActiveException(userId));
@@ -119,7 +129,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             price += course.getPrice().getPrice();
         }
 
-        this.paymentService.pay(price);
+        Charge charge = null;
+        try {
+            charge = this.paymentService.charge(chargeRequest);
+        } catch (CardException | APIException | AuthenticationException | APIConnectionException | InvalidRequestException e) {
+            throw new TransactionFailedException(userId, e.getMessage());
+        }
+
 
         shoppingCart.setCourses(courses);
         shoppingCart.setStatus(CartStatus.FINISHED);

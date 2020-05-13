@@ -123,10 +123,30 @@
             </div>
             <br>
             <div class="row">
-                <form action="/paypal" method="get">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-paypal"></i> Process Checkout
-                    </button>
+<!--                <form action="/paypal" method="get">-->
+<!--                    <button type="submit" class="btn btn-primary">-->
+<!--                        <i class="fa fa-paypal"></i> Process Checkout-->
+<!--                    </button>-->
+<!--                </form>-->
+
+                <form action="/payments/charge" method="post">
+                    <input type="hidden" th:value="${total}" name="amount"/>
+                    <input type="hidden" th:value="${currency}" name="currency"/>
+<!--                    <div class="row">-->
+<!--                        <textarea type="hidden" name="description"></textarea>-->
+<!--                    </div>-->
+
+                    <script
+                            src='https://checkout.stripe.com/checkout.js'
+                            class='stripe-button'
+                            th:attr='data-key=${stripePublicKey},
+                            data-amount=${total*100},
+                            data-currency=${currency}'
+                            data-name='Courses'
+                            data-description='Courses checkout'
+                            data-locale='auto'
+                            data-zip-code='false'>
+                    </script>
                 </form>
             </div>
         </div>

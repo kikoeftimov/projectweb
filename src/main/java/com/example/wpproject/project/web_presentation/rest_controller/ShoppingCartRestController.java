@@ -52,9 +52,9 @@ public class ShoppingCartRestController {
         return this.shoppingCartService.cancelShoppingCart(this.authService.getCurrentUserId());
     }
 
-    @PatchMapping("/checkout")
-    public ShoppingCart checkoutShoppingCard(){
-        return this.shoppingCartService.checkoutShoppingCart(this.authService.getCurrentUserId());
-    }
+//    @PatchMapping("/checkout")
+//    public ShoppingCart checkoutShoppingCard(){
+//        return this.shoppingCartService.checkoutShoppingCart(this.authService.getCurrentUserId());
+//    }
 
 }
